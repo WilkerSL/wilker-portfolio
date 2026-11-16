@@ -22,7 +22,6 @@ export const DURATION = {
 } as const;
 
 export const SMOOTH_SCROLL_SECONDS = 0.8;
-export const SMOOTH_TOUCH_SECONDS = 0.1;
 
 export const REVEAL = {
   distance: 26,

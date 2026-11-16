@@ -5,6 +5,7 @@ import type { PerspectiveCamera as Camera } from "three";
 import { StudioLights } from "@/scene/lighting/studio-lights.component";
 import { VIEW_VISIBILITY_MARGIN } from "@/scene/views/cursor-follow.constants";
 import { fitCameraWidth } from "@/scene/views/frame-camera.util";
+import { useViewActivity } from "@/scene/views/view-activity.store";
 import { ViewVisibilityContext } from "@/scene/views/view-visibility.context";
 import type { MascotViewProps, ViewCameraRigProps } from "@/scene/views/mascot-view.interfaces";
 
@@ -34,14 +35,30 @@ export function MascotView({ camera, className = "relative", children, ref, onPo
     if (element === null) {
       return;
     }
+    const { show, hide } = useViewActivity.getState();
+    let counted = false;
     const observer = new IntersectionObserver(
       ([entry]) => {
-        visible.current = entry?.isIntersecting ?? true;
+        const inView = entry?.isIntersecting ?? true;
+        visible.current = inView;
+        if (inView !== counted) {
+          counted = inView;
+          if (inView) {
+            show();
+          } else {
+            hide();
+          }
+        }
       },
       { rootMargin: VIEW_VISIBILITY_MARGIN },
     );
     observer.observe(element);
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      if (counted) {
+        hide();
+      }
+    };
   }, [visible]);
 
   return (

@@ -55,6 +55,15 @@ test("the mobile menu opens and leads to a section", async ({ page, isMobile }) 
   await expect(page.getByRole("button", { name: "Abrir menu" })).toHaveAttribute("aria-expanded", "false");
 });
 
+test("clicking the name in the header goes back to the top", async ({ page }) => {
+  await page.goto("/");
+  await page.locator("#page-loader").waitFor({ state: "detached", timeout: 30_000 });
+  await page.evaluate(() => window.scrollTo(0, 2400));
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(1000);
+  await page.locator("header").getByRole("link", { name: /Wilker Lima/ }).click();
+  await expect.poll(() => page.evaluate(() => window.scrollY), { timeout: 8000 }).toBeLessThan(5);
+});
+
 test("unknown routes show the not found page", async ({ page }) => {
   await page.goto("/rota-que-nao-existe");
   await expect(page.getByText("Essa página não existe.")).toBeVisible();

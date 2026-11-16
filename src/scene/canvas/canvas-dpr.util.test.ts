@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { canvasDpr, isIntegratedGpu } from "@/scene/canvas/canvas-dpr.util";
+import { canvasDpr, isIntegratedGpu, scaledDpr } from "@/scene/canvas/canvas-dpr.util";
 
 describe("canvasDpr", () => {
   it("follows the device ratio on desktop screens", () => {
@@ -19,6 +19,15 @@ describe("canvasDpr", () => {
 
   it("never drops below 1", () => {
     expect(canvasDpr(2, 3840, 2160, "integrated")).toBe(1);
+  });
+});
+
+describe("scaledDpr", () => {
+  it("moves between 1 and the ceiling with the performance factor", () => {
+    expect(scaledDpr(2, 0.5)).toBe(1.5);
+    expect(scaledDpr(2, 0)).toBe(1);
+    expect(scaledDpr(2, 1)).toBe(2);
+    expect(scaledDpr(1, 0.5)).toBe(1);
   });
 });
 

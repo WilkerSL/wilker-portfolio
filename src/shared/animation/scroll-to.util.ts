@@ -18,11 +18,11 @@ export function setScrollPaused(paused: boolean): void {
   document.documentElement.style.overflow = paused ? "hidden" : "";
 }
 
-export function scrollToTop(): void {
+export function scrollToTop(smooth = false): void {
   const smoother = ScrollSmoother.get();
   if (smoother !== undefined) {
-    smoother.scrollTo(0, false);
+    smoother.scrollTo(0, smooth);
     return;
   }
-  window.scrollTo({ top: 0 });
+  window.scrollTo({ top: 0, behavior: smooth ? "smooth" : "auto" });
 }

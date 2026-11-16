@@ -17,4 +17,10 @@ export const CANVAS_DPR = {
   },
 } as const;
 
+export const ADAPTIVE_DPR = {
+  start: { full: 1, integrated: 1, lite: 0.5 },
+  step: 0.25,
+  flipflops: 3,
+} as const;
+
 export const INTEGRATED_GPU_PATTERN = /intel|iris|uhd|radeon\(tm\) graphics|vega|mali|adreno|powervr|apple gpu|swiftshader|llvmpipe/i;

@@ -61,12 +61,18 @@ function render(template: string, lang: string, head: string): string {
   return template.replace(/<html lang="[^"]*">/, `<html lang="${lang}">`).replace(/<title>[\s\S]*?<\/title>/, head);
 }
 
+function media(file: string): string {
+  return /-lite-[^.]+\.glb$/.test(file) ? "(pointer: coarse)" : "(pointer: fine)";
+}
+
 function preloadTags(files: readonly string[]): string[] {
   const fonts = files.filter((file) => /^(mona-sans-latin-standard-normal|monaspace-neon-latin-400-normal)-.*\.woff2$/.test(file));
-  const fetches = files.filter((file) => file.endsWith(".glb") || /^monaspace-neon-latin-600-normal-.*\.woff$/.test(file));
+  const codeFont = files.filter((file) => /^monaspace-neon-latin-600-normal-.*\.woff$/.test(file));
+  const models = files.filter((file) => file.endsWith(".glb"));
   return [
     ...fonts.map((file) => `<link rel="preload" href="/assets/${file}" as="font" type="font/woff2" crossorigin />`),
-    ...fetches.map((file) => `<link rel="preload" href="/assets/${file}" as="fetch" crossorigin />`),
+    ...codeFont.map((file) => `<link rel="preload" href="/assets/${file}" as="fetch" crossorigin />`),
+    ...models.map((file) => `<link rel="preload" href="/assets/${file}" as="fetch" crossorigin media="${media(file)}" />`),
   ];
 }
 

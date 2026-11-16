@@ -3,11 +3,12 @@ import { Canvas } from "@react-three/fiber";
 import { useState } from "react";
 import { NeutralToneMapping } from "three";
 import { CanvasDpr } from "@/scene/canvas/canvas-dpr.component";
-import { canvasDpr, isIntegratedGpu } from "@/scene/canvas/canvas-dpr.util";
+import { canvasDpr, isIntegratedGpu, scaledDpr } from "@/scene/canvas/canvas-dpr.util";
 import { FrameClear } from "@/scene/canvas/frame-clear.component";
+import { FrameloopGate } from "@/scene/canvas/frameloop-gate.component";
 import type { DprTier } from "@/scene/canvas/render-quality.types";
 import { isLiteRender } from "@/scene/canvas/render-quality.util";
-import { SCENE_CANVAS } from "@/scene/canvas/scene-canvas.constants";
+import { ADAPTIVE_DPR, SCENE_CANVAS } from "@/scene/canvas/scene-canvas.constants";
 import { SceneWarmup } from "@/scene/loading/scene-warmup.component";
 import { graphicsRenderer } from "@/shared/utils/device.util";
 
@@ -27,7 +28,7 @@ export function SceneCanvas() {
       aria-hidden="true"
       className="scene-canvas"
       style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: SCENE_CANVAS.zIndex }}
-      dpr={canvasDpr(window.devicePixelRatio, window.innerWidth, window.innerHeight, tier)}
+      dpr={scaledDpr(canvasDpr(window.devicePixelRatio, window.innerWidth, window.innerHeight, tier), ADAPTIVE_DPR.start[tier])}
       gl={{ antialias: tier !== "lite", alpha: true, powerPreference: "high-performance" }}
       eventSource={eventSource}
       onCreated={({ gl }) => {
@@ -36,6 +37,7 @@ export function SceneCanvas() {
       }}
     >
       <CanvasDpr tier={tier} />
+      <FrameloopGate />
       <FrameClear />
       <SceneWarmup />
       <View.Port />

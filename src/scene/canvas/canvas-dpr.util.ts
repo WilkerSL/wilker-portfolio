@@ -9,6 +9,11 @@ export function canvasDpr(devicePixelRatio: number, width: number, height: numbe
   return Math.max(CANVAS_DPR.min, Math.min(byDevice, byBudget));
 }
 
+export function scaledDpr(ceiling: number, factor: number): number {
+  const floor = Math.min(CANVAS_DPR.min, ceiling);
+  return Math.round((floor + (ceiling - floor) * factor) * 20) / 20;
+}
+
 export function isIntegratedGpu(renderer: string): boolean {
   return INTEGRATED_GPU_PATTERN.test(renderer);
 }

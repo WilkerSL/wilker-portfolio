@@ -1,0 +1,12 @@
+node_modules
+dist
+coverage
+test-results
+playwright-report
+.vite
+*.local
+.env
+.env.*
+assets-src/raw
+.DS_Store
+Thumbs.db

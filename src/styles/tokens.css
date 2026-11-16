@@ -1,0 +1,39 @@
+@theme {
+  --color-paper: #ffffff;
+  --color-snow: #f7f7f8;
+  --color-ink: #111114;
+  --color-body: #3b3b44;
+  --color-mute: #6c6c77;
+  --color-faint: #a1a1ac;
+  --color-line: #ebebef;
+  --color-line-strong: #d9d9e0;
+  --color-accent: #00add8;
+  --color-accent-strong: #007da0;
+  --color-accent-soft: #eaf8fc;
+  --color-accent-mist: #d2f1f9;
+
+  --font-display: "Mona Sans Variable", "Segoe UI Variable Display", system-ui, sans-serif;
+  --font-mono: "Monaspace Neon", "Cascadia Mono", ui-monospace, monospace;
+
+  --ease-mass: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-snap: cubic-bezier(0.7, 0, 0.2, 1);
+
+  --breakpoint-3xl: 120rem;
+  --breakpoint-4k: 240rem;
+}
+
+:root {
+  --frame-max: 3840px;
+  --container: 78rem;
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+  --section-space: clamp(5rem, 10vw, 9rem);
+  --step-display: clamp(3.1rem, 7.4vw, 7rem);
+  --step-title: clamp(2.1rem, 4.2vw, 3.75rem);
+  --step-heading: clamp(1.35rem, 2vw, 1.75rem);
+  --step-lead: clamp(1.075rem, 1.3vw, 1.3rem);
+  --step-body: 1rem;
+  --step-small: 0.875rem;
+  --step-micro: 0.75rem;
+  --radius-card: 1.5rem;
+  --radius-pill: 999px;
+}
